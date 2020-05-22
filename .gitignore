@@ -1,0 +1,6 @@
+model.png
+model_input_288.png
+__pycache__/read_tfrecord.cpython-36.pyc
+__pycache__/utils.cpython-36.pyc
+tf_record_0.tfrecords
+images.tfrecords

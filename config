@@ -1,0 +1,48 @@
+{
+    "input_parameters": {
+        "num_anchors": 9,
+        "train_ann_dir": "/home/wisenet/Downloads/raccoon_dataset/annotations/",
+        "train_image_dir": "/home/wisenet/Downloads/raccoon_dataset/images/",
+        "shard_size": 500,
+        "regen_records": 0,
+        "num_epochs": 100,
+        "jitter": 0.3,
+        "hue_delta": 0.2,
+        "saturation_delta": [
+            5,
+            10
+        ],
+        "contrast_delta": [
+            0.2,
+            0.5
+        ]
+    },
+    "generated_parameters": {
+        "paths": [
+            "tf_record_0.tfrecords"
+        ],
+        "labels": [
+            "raccoon"
+        ],
+        "anchors": [
+            114,
+            127,
+            138,
+            193,
+            152,
+            291,
+            198,
+            354,
+            226,
+            234,
+            261,
+            382,
+            294,
+            305,
+            362,
+            385,
+            376,
+            279
+        ]
+    }
+}
