@@ -8,8 +8,8 @@
                 "config": {
                     "batch_input_shape": [
                         null,
-                        288,
-                        288,
+                        null,
+                        null,
                         3
                     ],
                     "dtype": "float32",

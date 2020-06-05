@@ -4,3 +4,6 @@ __pycache__/read_tfrecord.cpython-36.pyc
 __pycache__/utils.cpython-36.pyc
 tf_record_0.tfrecords
 images.tfrecords
+logs/events.out.tfevents.1591362746.wisenet-desktop.11006.21953.v2
+__pycache__/augmentation.cpython-36.pyc
+__pycache__/pred_utils.cpython-36.pyc

@@ -94,6 +94,8 @@ def gen_records(config):
 	anns = os.listdir(ann_dir)
 	num_anns = len(anns)
 	num_shards = int((num_anns-(num_anns % shard_size))/shard_size) + 1
+	max_objs_per_image = 0
+	
 	for shard_index in range(num_shards):
 		with tf.io.TFRecordWriter(record.format(shard_index)) as writer:
 			i = shard_index*shard_size
@@ -112,7 +114,11 @@ def gen_records(config):
 				depth = int(size.find("depth").text)
 				image_raw = open(images_dir + filename, 'rb').read()
 				name, xmin, xmax, ymin, ymax = list(), list(), list(), list(), list()
+				ctr = 0
 				for obj in root.findall("object"):
+					ctr += 1
+					if (ctr > max_objs_per_image):
+						max_objs_per_image = ctr
 					name.append(str.encode(obj.find("name").text))
 					bndbox = obj.find("bndbox")
 					xmin.append(int(bndbox.find("xmin").text))
@@ -125,7 +131,7 @@ def gen_records(config):
 	paths = []
 	for shard_index in range(num_shards):
 		paths.append(record.format(shard_index))
-	return paths
+	return paths, max_objs_per_image
 # def gen_anchors():
 
 def gen_labels(config):
@@ -166,9 +172,11 @@ def generate():
 		config = json.load(fp)
 	if(config['input_parameters']['regen_records']):
 		print("Generating TFRecords")
-		paths = gen_records(config)
-		config['generated_parameters'] = {}
+		paths, max_objs_per_image = gen_records(config)
+		# config['generated_parameters'] = {}
 		config['generated_parameters']['paths'] = paths
+		config['generated_parameters']['max_objs_per_image'] = max_objs_per_image
+		config['input_parameters']['regen_records'] = 0
 		with open(config_path, 'w') as fp:
 			json.dump(config, fp, indent=4)
 	labels = gen_labels(config)
