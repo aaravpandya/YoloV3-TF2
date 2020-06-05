@@ -4,7 +4,6 @@ import os
 import xml.etree.ElementTree as ET
 import numpy as np
 import json
-import inspect
 
 def _bytes_feature(value):
 	"""Returns a bytes_list from a string / byte."""
@@ -63,7 +62,7 @@ def get_dataset(paths=[]):
 	if len(paths) == 0:
 		print("Empty path")
 		return
-	
+
 	raw_image_dataset = tf.data.TFRecordDataset(paths)
 
 	feature = {
@@ -95,7 +94,7 @@ def gen_records(config):
 	num_anns = len(anns)
 	num_shards = int((num_anns-(num_anns % shard_size))/shard_size) + 1
 	max_objs_per_image = 0
-	
+
 	for shard_index in range(num_shards):
 		with tf.io.TFRecordWriter(record.format(shard_index)) as writer:
 			i = shard_index*shard_size
@@ -156,11 +155,11 @@ def gen_anchors(config):
 		ymin = features['ymin'].values.numpy()
 		ymax = features['ymax'].values.numpy()
 		width = ymax - ymin
-		
+
 		for i in range(height.shape[0]):
 			anchors.append([height[i],width[i]])
 		# labels.extend(names.tolist())
-	
+
 	anchors = np.array(anchors)
 	kmeans = KMeans(n_clusters=config['input_parameters']['num_anchors'], random_state=0).fit(anchors)
 	centers = kmeans.cluster_centers_

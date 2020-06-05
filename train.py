@@ -1,12 +1,10 @@
 
 import time
-import numpy as np
 import json
-from utils import save_model_to_json, get_dataset, get_model, get_loss
+from utils import get_dataset, get_model, get_loss
 from augmentation import data_augmentation
 from pred_utils import compute_map
 import tensorflow as tf
-from tensorflow import keras
 
 config_path = "config"
 with open(config_path, 'r') as fp:
